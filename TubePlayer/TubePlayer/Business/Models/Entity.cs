@@ -1,4 +1,3 @@
-namespace TubePlayer.Business.Models
-{
-    public record Entity(string Name);
-}
+namespace TubePlayer.Business.Models;
+
+public record Entity(string Name);
