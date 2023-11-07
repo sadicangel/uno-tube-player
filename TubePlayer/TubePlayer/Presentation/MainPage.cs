@@ -74,6 +74,7 @@ public partial class MainPage : Page
                                 .Padding(12, 8)
                                 .Navigation(request: "VideoDetails")
                                 .AutoLayout(primaryAlignment: AutoLayoutPrimaryAlignment.Stretch)
+                                .IsItemClickEnabled(true)
                                 .ItemTemplate<YouTubeVideo>
                                 (
                                     video =>
