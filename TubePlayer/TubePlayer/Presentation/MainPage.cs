@@ -1,4 +1,3 @@
-using Microsoft.UI.Xaml.Media.Imaging;
 using Path = Microsoft.UI.Xaml.Shapes.Path;
 
 namespace TubePlayer.Presentation;
@@ -43,7 +42,7 @@ public partial class MainPage : Page
                                         .Children
                                         (
                                             new Image()
-                                                .Source(new BitmapImage(new Uri("https://picsum.photos/384/40")))
+                                                .Source("ms-appx:///TubePlayer/Assets/navigation_bar.png")
                                                 .Stretch(Stretch.UniformToFill)
                                                 .AutoLayout(primaryAlignment: AutoLayoutPrimaryAlignment.Stretch)
                                         )
