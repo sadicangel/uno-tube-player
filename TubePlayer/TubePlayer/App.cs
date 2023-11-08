@@ -1,8 +1,4 @@
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.UserSecrets;
-
-[assembly: UserSecretsId("d2334460-3161-4580-a0bc-98624b687b80")]
 
 namespace TubePlayer;
 
@@ -22,12 +18,10 @@ public class App : Application
                 .UseEnvironment(Environments.Development)
 #endif
                 .UseConfiguration(
-                    configureHostConfiguration: builder =>
-                        builder
-                            .AddUserSecrets<App>(optional: false),
                     configure: configBuilder =>
                         configBuilder
                             .EmbeddedSource<App>()
+                            .EmbeddedSource<App>("secrets")
                             .Section<AppConfig>()
                 )
                 .UseSerialization(services =>
@@ -36,11 +30,10 @@ public class App : Application
                 })
                 .ConfigureServices((context, services) =>
                 {
-#if USE_MOCKS
-                    services.AddSingleton<IYouTubeService, YouTubeServiceMock>();
-#else
-                    services.AddSingleton<IYouTubeService, YouTubeService>();
-#endif
+                    if (string.IsNullOrEmpty(context.Configuration["YouTubeEndpoint:ApiKey"]))
+                        services.AddSingleton<IYouTubeService, YouTubeServiceMock>();
+                    else
+                        services.AddSingleton<IYouTubeService, YouTubeService>();
                 })
                 .UseNavigation(ReactiveViewModelMappings.ViewModelMappings, RegisterRoutes)
                 .UseHttp((context, services) =>
