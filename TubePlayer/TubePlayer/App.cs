@@ -43,7 +43,8 @@ public class App : Application
                         {
                             httpClient.BaseAddress = new Uri(options!.Url!);
                             httpClient.DefaultRequestHeaders.Add("X-Goog-Api-Key", options.ApiKey);
-                        }));
+                        }))
+                    .AddRefitClient<IYouTubePlayerEndpoint>(context);
                 })
             );
         MainWindow = builder.Window;
