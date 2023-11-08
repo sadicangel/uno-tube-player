@@ -24,3 +24,11 @@ public sealed partial record YouTubeVideoDetailsData(
 public sealed record VideoDetailsResultData(ImmutableList<YouTubeVideoDetailsData>? Items);
 
 public sealed record ChannelSearchResultData(ImmutableList<ChannelData>? Items);
+
+public partial record IdData(string? VideoId);
+
+public partial record YouTubeVideoData(IdData? Id, SnippetData? Snippet);
+
+public record PageInfoData(int? TotalResults, int? ResultsPerPage);
+
+public record VideoSearchResultData(IImmutableList<YouTubeVideoData>? Items, string? NextPageToken, PageInfoData? PageInfo);
