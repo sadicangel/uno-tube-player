@@ -2,6 +2,8 @@ namespace TubePlayer.Presentation;
 
 public partial class VideoDetailsPage : Page
 {
+    private MediaPlayerElement? _youTubePlayer;
+
     public VideoDetailsPage()
     {
         this
@@ -48,6 +50,10 @@ public partial class VideoDetailsPage : Page
                                                 )
                                         ),
                                     new MediaPlayerElement()
+                                        .Assign(player => _youTubePlayer = player)
+                                        .AutoPlay(true)
+                                        .Source(() => vm.VideoSource)
+                                        .PosterSource(() => vm.Video.Details.Snippet?.Thumbnails?.Medium?.Url!)
                                         .AreTransportControlsEnabled(true)
                                         .Width(400)
                                         .Height(300)
@@ -144,5 +150,12 @@ public partial class VideoDetailsPage : Page
                         )
                 )
         );
+    }
+
+    protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+    {
+        base.OnNavigatingFrom(e);
+
+        _youTubePlayer?.MediaPlayer.Pause();
     }
 }
